@@ -1,135 +1,119 @@
-# Turborepo starter
+# ⚡ Turborepo - Chat Application
 
-This Turborepo starter is maintained by the Turborepo core team.
+Real-time chat app built with Turborepo. Monorepo with React frontend, Express backend, and WebSocket messaging.
 
-## Using this example
+## What it does
 
-Run the following command:
+- Real-time chat with WebSockets
+- User authentication
+- Message history
+- Online user indicators
+- Monorepo setup with shared packages
 
-```sh
-npx create-turbo@latest
-```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## Project Structure
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+Turborepo/
+├── apps/
+│   ├── server/              # Backend API and WebSocket
+│   └── web/                 # Frontend React app
+├── packages/
+│   ├── ui/                  # Shared UI components
+│   ├── eslint-config/       # Shared configs
+│   └── typescript-config/   # Shared configs
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## Quick Start
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+1. Clone and install:
+```bash
+git clone <repository-url>
+cd Turborepo
+pnpm install
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+2. Set up environment:
+```bash
+cp .env.example .env
+# Edit .env with your settings
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+3. Start everything:
+```bash
+pnpm dev
 ```
 
-### Remote Caching
+This starts:
+- Web app on http://localhost:3000
+- Server on http://localhost:3001
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## Available Commands
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+```bash
+pnpm dev              # Start all servers
+pnpm build            # Build everything
+pnpm lint             # Lint all packages
+pnpm test             # Run all tests
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## API Endpoints
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```http
+POST /api/auth/login      # Login
+POST /api/auth/register   # Register
+GET  /api/messages        # Get messages
+POST /api/messages        # Send message
+GET  /api/users           # Get online users
 ```
 
-## Useful Links
+## WebSocket Events
 
-Learn more about the power of Turborepo:
+- `join-room` / `leave-room`
+- `send-message`
+- `typing` / `stop-typing`
+- `user-joined` / `user-left`
+- `new-message`
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+## Deployment
+
+### Docker
+```dockerfile
+FROM node:18-alpine AS base
+WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
+
+FROM base AS build
+COPY . .
+RUN pnpm build
+
+FROM base AS production
+COPY --from=build /app/dist ./dist
+EXPOSE 3000 3001
+CMD ["pnpm", "start"]
+```
+
+### Environment Variables
+```bash
+DATABASE_URL="postgresql://user:password@localhost:5432/chat"
+JWT_SECRET="your-jwt-secret"
+PORT=3001
+NODE_ENV=production
+```
+
+## Tech Stack
+
+- Frontend: Next.js, React, TypeScript
+- Backend: Express.js, WebSockets
+- Database: PostgreSQL/MongoDB
+- Build: Turborepo, pnpm
+- Styling: Tailwind CSS
+
+## License
+
+MIT License
+
+---
+
+**Made by**: Rakesh Singh  
+**Email**: contact@iamrakesh.codes
